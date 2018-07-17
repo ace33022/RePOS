@@ -25,6 +25,7 @@
 
     <title>RePOS</title>
 
+		<!--
 		<link type="image/png" rel="icon" href="images/favicon.png" />
 
     <link type="text/css" rel="stylesheet" href="javascripts/jquery/jquery-ui/themes/base/jquery.ui.base.css" />
@@ -40,6 +41,20 @@
 		<link type="text/css" rel="stylesheet" href="javascripts/x-editable/dist/bootstrap3-editable/css/bootstrap-editable.css" />
 
     <link type="text/css" rel="stylesheet" href="stylesheets/Font-Awesome/css/font-awesome.css" />
+		  -->
+
+		<link type="image/png" rel="icon" href="https://bold33022.github.io/r-life/images/favicon.png" />
+
+		<link type="text/css" rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/css/bootstrap.min.css" />
+    <link type="text/css" rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/css/bootstrap-theme.min.css" />
+
+		<link type="text/css" rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jasny-bootstrap/3.1.3/css/jasny-bootstrap.min.css" />
+		<link type="text/css" rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-fileinput/4.3.8/css/fileinput.min.css" media="all" />
+		<link type="text/css" rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datetimepicker/4.17.47/css/bootstrap-datetimepicker.min.css" media="all" />
+		
+		<link type="text/css" rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/x-editable/1.4.5/bootstrap-editable/css/bootstrap-editable.css" media="all" />
+
+    <link type="text/css" rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" />
 
     <style type="text/css">
 
@@ -51,6 +66,7 @@
 			}
 		</style>
 
+		<!--
     <script type="text/javascript" src="javascripts/tw/ace33022/NameSpace.js"></script>
 
     <script type="text/javascript" src="javascripts/tw/ace33022/DefaultConfigurations.js"></script>
@@ -59,6 +75,16 @@
 		<script type="text/javascript" src="javascripts/tw/ace33022/RequireJSConfig.js"></script>
 
 		<script type="text/javascript" src="javascripts/requirejs/require.js"></script>
+		  -->
+
+		<script type="text/javascript" src="https://ace33022.github.io/tw/ace33022/NameSpace.js"></script>
+
+    <script type="text/javascript" src="https://ace33022.github.io/tw/ace33022/DefaultConfigurations.js"></script>
+    <script type="text/javascript" src="https://ace33022.github.io/tw/Configurations.js"></script>
+
+    <script type="text/javascript" src="https://ace33022.github.io/tw/ace33022/RequireJSConfig.js"></script>
+
+		<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.2.0/require.js"></script>
 
     <script type="text/javascript">
 
@@ -194,20 +220,20 @@
 				});
 
 				function setArrVOToLocalStorage(arrVO, tableName) {
-				
+
 					var voPath = localPath + Configurations.webServiceVOPath + tableName;
 					var arrJSON = new Array();
-					
+
 					arrVO.forEach(function(currentValue, index) {arrJSON.push(currentValue.toJSONObject());});
 
 					localStorage.setItem(voPath, JSON.stringify(arrJSON));
 				}
-				
+
 				function setArrVOFromLocalStorage(tableName, VO, arrVO) {
-				
+
 					var voPath = localPath + Configurations.webServiceVOPath + tableName;
 					var arrJSON;
-					
+
 					if (localStorage.getItem(voPath)) {
 
 						arrJSON = JSON.parse(localStorage.getItem(voPath));
@@ -220,7 +246,7 @@
 						});
 					}
 				}
-				
+
 				function newAppTag() {
 
 					jQuery('#' + appId).remove();
@@ -463,7 +489,7 @@
 
 												postCallback();
 											}
-											
+
 											arrSizeGroupsDetailVO.forEach(function(currentValue, index, array) {arrSizeGroupsDetail.push(currentValue.toJSONObject());});
 
 											localStorage.setItem(voPath, JSON.stringify(arrSizeGroupsDetail));
@@ -977,7 +1003,7 @@
 						});
 					});
 				}
-				
+
 				function createSYS00270() {
 
 					newAppTag();
@@ -1038,7 +1064,7 @@
 							"insertMethod": function(model, callback) {
 
 								var self = this;
-								
+
 								var voPath = localPath + Configurations.webServiceVOPath + 'drinks';
 
 								var vo;
@@ -1073,7 +1099,7 @@
 							"updateMethod": function(model, callback) {
 
 								var self = this;
-								
+
 								var voPath = localPath + Configurations.webServiceVOPath + 'drinks';
 
 								var arrDrinks = new Array();
@@ -1128,7 +1154,7 @@
 							"expandToProducts": function(event, model, callback) {
 
 								var self = this;
-								
+
 								FormUtils.showMarqueebar(
 
 									'轉出商品資料‧‧‧',
@@ -1138,7 +1164,7 @@
 										var arrDrinks = new Array();
 
 										var vo = _.find(self.getArrDrinksVO(), function(vo) {return vo.getDrinkCode() === model.get('drink_code');});
-								
+
 										arrProductsVO = arrProductsVO.concat(
 
 											vo.tranToProductsVO(
@@ -1159,7 +1185,7 @@
 										vo.setExpandProductFlag('1');
 										vo.setUpdateUserAccount(usersVO.getUserAccount());
 										vo.setNowUpdateDateTime();
-										
+
 										arrProductsVO.forEach(function(currentValue, index, array) {arrProducts.push(currentValue.toJSONObject());});
 
 										localStorage.setItem(localPath + Configurations.webServiceVOPath + 'products', JSON.stringify(arrProducts));
@@ -1167,7 +1193,7 @@
 										arrDrinksVO.forEach(function(currentValue, index, array) {arrDrinks.push(currentValue.toJSONObject());});
 
 										localStorage.setItem(localPath + Configurations.webServiceVOPath + 'drinks', JSON.stringify(arrDrinks));
-										
+
 										closeMarqueebar();
 									},
 									function() {
@@ -1187,7 +1213,7 @@
 
 					newAppTag();
 
-					requirejs(["tw.ace33022.vo.POSTrnLogs", "tw.ace33022.backbone.view.POS00020", "moment", "x-editable-bootstrap3"], function(POSTrnLogs, View, moment) {
+					requirejs(["tw.ace33022.vo.POSTrnLogs", "tw.ace33022.backbone.view.POS00020", "moment", "x-editable-bootstrap"], function(POSTrnLogs, View, moment) {
 
 						var view;
 
@@ -1378,7 +1404,7 @@
 								{
 									"caption": "開啟新交易",
 									"click": function(event) {
-									
+
 										jQuery('.collapse').collapse('hide');
 
 										if (view.getArrPOSTrnLogsDetailVO().length !== 0) {
@@ -1616,7 +1642,7 @@
 								{
 									"caption": "尺寸基本資料維護",
 									"click": function(event) {
-									
+
 										jQuery('.collapse').collapse('hide');
 
 										confirmAbortTran(createSYS00210);
@@ -1625,7 +1651,7 @@
 								{
 									"caption": "尺寸群組資料維護",
 									"click": function(event) {
-									
+
 										jQuery('.collapse').collapse('hide');
 
 										confirmAbortTran(createSYS00220);
@@ -1634,7 +1660,7 @@
 								{
 									"caption": "甜度基本資料維護",
 									"click": function(event) {
-									
+
 										jQuery('.collapse').collapse('hide');
 
 										confirmAbortTran(createSYS00230);
@@ -1643,7 +1669,7 @@
 								{
 									"caption": "甜度群組資料維護",
 									"click": function(event) {
-									
+
 										jQuery('.collapse').collapse('hide');
 
 										confirmAbortTran(createSYS00240);
@@ -1652,7 +1678,7 @@
 								{
 									"caption": "冰塊用量基本資料維護",
 									"click": function(event) {
-									
+
 										jQuery('.collapse').collapse('hide');
 
 										confirmAbortTran(createSYS00250);
@@ -1661,7 +1687,7 @@
 								{
 									"caption": "冰塊用量群組資料維護",
 									"click": function(event) {
-									
+
 										jQuery('.collapse').collapse('hide');
 
 										confirmAbortTran(createSYS00260);
@@ -1670,7 +1696,7 @@
 								{
 									"caption": "飲料資料維護",
 									"click": function(event) {
-									
+
 										jQuery('.collapse').collapse('hide');
 
 										confirmAbortTran(createSYS00270);
@@ -1709,9 +1735,9 @@
 												view.appendToDefaultContainer(objRow);
 
 												if (arrProductsVO.length != 0) {
-												
+
 													objRow.find('table').append('<tbody style="position: absolute; overflow-y: scroll; height: 80%;"></tbody>');
-												
+
 													tag = '';
 													for (index = 0; index < arrProductsVO.length; index++) {
 
@@ -1727,52 +1753,52 @@
 												 *
 												 */
 												objRow.find('input[type="checkbox"]').on('click', function(event) {
-												
+
 													// event.stopPropagation();
-													
+
 													if (objRow.find('input:checked').length != 0) {
-													
+
 														objRow.find('input[type="button"]').prop('disabled', false);
 													}
 													else {
-													
+
 														objRow.find('input[type="button"]').prop('disabled', true);
 													}
 												});
-												
+
 												objRow.find('input[type="button"]').on('click', function(event) {
-												
+
 													FormUtils.showInputNumberModal({
-													
+
 														"title": "",
 														"value": 10,
 														"callback": function(value) {
-														
+
 															var productPrice = new Number(value);
 															var productCode;
 															var products;
-														
+
 															objRow.find('tbody > tr').each(function(index, element) {
-															
+
 																if (jQuery(element).find('input[type="checkbox"]').prop('checked')) {
-																
+
 																	productCode = jQuery(element).find('td').eq(1).text();
-																	
+
 																	products = _.find(arrProductsVO, function(vo) {return vo.getProductCode() == productCode;});
 																	products.setProductPrice(productPrice);
-																	
+
 																	jQuery(element).find('td').eq(3).find('a').text(productPrice);
 																}
 															});
-															
+
 															setArrVOToLocalStorage(arrProductsVO, 'products');
-															
+
 															objRow.find('input[type="checkbox"]').prop('checked', false);
 															objRow.find('input[type="button"]').prop('disabled', true);
 														}
 													})
 												});
-												
+
 												/**
 												 *
 												 * @see <a href="http://vitalets.github.io/x-editable/">X-editable :: In-place editing with Twitter Bootstrap, jQuery UI or pure jQuery</a>
@@ -1806,14 +1832,14 @@
 																if (index === 1) productCode = jQuery(element).text();
 															});
 														});
-														
+
 														products = _.find(arrProductsVO, function(vo) {return vo.getProductCode() == productCode;});
 														products.setProductPrice(productPrice);
-														
+
 														setArrVOToLocalStorage(arrProductsVO, 'products');
 													}
 												});
-												
+
 												objRow.find('a').on('shown', function(event, editable) {
 
 													/**
@@ -1828,7 +1854,7 @@
 													 *
 													 */
 													editable.input.postrender = function() {
-													
+
 														editable.input.$input.val(jQuery(event.target).text());
 														editable.input.$input.select();
 													};
@@ -1844,28 +1870,28 @@
 									"click": function(event) {
 
 										jQuery('.collapse').collapse('hide');
-										
+
 										FormUtils.showInputModal({
-						
-											"title": "檔案名稱", 
+
+											"title": "檔案名稱",
 											"defaultInputVaule": "RePOS.json",
 											"callback": function(fileName) {
-						
+
 												var data = new Array();
-									
+
 												if (fileName != null) {
 
 													if (fileName == '') {
-								
+
 														FormUtils.showMessage('檔案名稱不可空白！');
 													}
 													else {
-								
+
 														FormUtils.showProgressbar(
 
 															'資料處理中，請稍候‧‧‧',
 															function(closeProgressbar) {
-															
+
 																var arrSizes = new Array();
 																var arrSizeGroups = new Array();
 																var arrSizeGroupsDetail = new Array();
@@ -1877,17 +1903,17 @@
 																var arrIceDosages = new Array();
 																var arrIceDosageGroups = new Array();
 																var arrIceDosageGroupsDetail = new Array();
-				
+
 																var arrDrinks = new Array();
 																var arrProducts = new Array();
-																
+
 																var localkey, tableName, voPath;
 																var posKey;
 																var posTrnLogs = {};
 																var posTrnLogsDetail = {};
-															
+
 																data.push('{\n');
-																
+
 																// 基本資料
 																arrSizesVO.forEach(function(currentValue, index) {arrSizes.push(currentValue.toJSONObject());});
 																data.push('"sizes":' + JSON.stringify(arrSizes) + ',' + '\n');
@@ -1895,75 +1921,75 @@
 																data.push('"size_groups":' + JSON.stringify(arrSizeGroups) + ',' + '\n');
 																arrSizeGroupsDetailVO.forEach(function(currentValue, index) {arrSizeGroupsDetail.push(currentValue.toJSONObject());});
 																data.push('"size_groups_detail":' + JSON.stringify(arrSizeGroupsDetail) + ',' + '\n');
-																
+
 																arrSugarsVO.forEach(function(currentValue, index) {arrSugars.push(currentValue.toJSONObject());});
 																data.push('"sugars":' + JSON.stringify(arrSugars) + ',' + '\n');
 																arrSugarGroupsVO.forEach(function(currentValue, index) {arrSugarGroups.push(currentValue.toJSONObject());});
 																data.push('"sugar_groups":' + JSON.stringify(arrSugarGroups) + ',' + '\n');
 																arrSugarGroupsDetailVO.forEach(function(currentValue, index) {arrSugarGroupsDetail.push(currentValue.toJSONObject());});
 																data.push('"sugar_groups_detail":' + JSON.stringify(arrSugarGroupsDetail) + ',' + '\n');
-																
+
 																arrIceDosagesVO.forEach(function(currentValue, index) {arrIceDosages.push(currentValue.toJSONObject());});
 																data.push('"ice_dosages":' + JSON.stringify(arrIceDosages) + ',' + '\n');
 																arrIceDosageGroupsVO.forEach(function(currentValue, index) {arrIceDosageGroups.push(currentValue.toJSONObject());});
 																data.push('"ice_dosage_groups":' + JSON.stringify(arrIceDosageGroups) + ',' + '\n');
 																arrIceDosageGroupsDetailVO.forEach(function(currentValue, index) {arrIceDosageGroupsDetail.push(currentValue.toJSONObject());});
 																data.push('"ice_dosage_groups_detail":' + JSON.stringify(arrIceDosageGroupsDetail) + ',' + '\n');
-																
+
 																arrDrinksVO.forEach(function(currentValue, index) {arrDrinks.push(currentValue.toJSONObject());});
 																data.push('"drinks":' + JSON.stringify(arrDrinks) + ',' + '\n');
 																arrProductsVO.forEach(function(currentValue, index) {arrProducts.push(currentValue.toJSONObject());});
 																data.push('"products":' + JSON.stringify(arrProducts) + ',' + '\n');
-																
+
 																// 交易資料
 																tableName = 'pos_trn_logs';
 																voPath = localPath + Configurations.webServiceVOPath + tableName;
 																for (localkey in localStorage) {
-																
+
 																	if (localkey.startsWith(voPath + '/') == true) {
-												
+
 																		posKey = localkey.substring(localkey.lastIndexOf('/') + 1);
-																		
+
 																		posTrnLogs[posKey] = JSON.parse(localStorage.getItem(localkey));
 																	}
 																}
 																data.push('"pos_trn_logs":', JSON.stringify(posTrnLogs) + ',' + '\n');
-																
+
 																tableName = 'pos_trn_logs_detail';
 																voPath = localPath + Configurations.webServiceVOPath + tableName;
 																for (localkey in localStorage) {
-																
+
 																	if (localkey.startsWith(voPath + '/') == true) {
-												
+
 																		posKey = localkey.substring(localkey.lastIndexOf('/') + 1);
-																		
+
 																		posTrnLogsDetail[posKey] = JSON.parse(localStorage.getItem(localkey));
 																	}
 																}
 																data.push('"pos_trn_logs_detail":', JSON.stringify(posTrnLogsDetail) + '\n');
-																
+
 																data.push('}');
-																
+
 																closeProgressbar();
 															},
 															function() {
 
 																requirejs(["blob", "filesaver"], function() {
-															
+
 																	var blob;
-											
+
 																	try {
-																	
+
 																		blob = new Blob(data, {type: 'text/plain;charset=' + document.characterSet});
-															
+
 																		if (!fileName.toLowerCase().endsWith('.json')) fileName += '.json';
-								
+
 																		saveAs(blob, fileName);
-																		
+
 																		FormUtils.showMessage('資料匯出完成！！');
-																	} 
+																	}
 																	catch(event) {
-												
+
 																		FormUtils.showMessage('存檔過程有誤！訊息：' + event.message);
 																	}
 																	finally {
@@ -1984,145 +2010,145 @@
 										jQuery('.collapse').collapse('hide');
 
 										FormUtils.showConfirmMessage(
-										
+
 											'資料匯入將會清除已存在之資料！！',
 											function() {
-											
+
 												FormUtils.selectFileModal({
-						
+
 													"callback": function(file) {
-											
+
 														if (file != null) {
 
 															FormUtils.showProgressbar(
 
 																'資料處理中，請稍候‧‧‧',
 																function(closeProgressbar) {
-														
+
 																	requirejs(["tw.ace33022.vo.Sizes", "tw.ace33022.vo.SizeGroups", "tw.ace33022.vo.SizeGroupsDetail", "tw.ace33022.vo.Sugars", "tw.ace33022.vo.SugarGroups", "tw.ace33022.vo.SugarGroupsDetail", "tw.ace33022.vo.IceDosages", "tw.ace33022.vo.IceDosageGroups", "tw.ace33022.vo.IceDosageGroupsDetail", "tw.ace33022.vo.Drinks", "tw.ace33022.vo.Products"], function(Sizes, SizeGroups, SizeGroupsDetail, Sugars, SugarGroups, SugarGroupsDetail, IceDosages, IceDosageGroups, IceDosageGroupsDetail, Drinks, Products) {
-															
+
 																		var fileReader = new FileReader();
-															
+
 																		fileReader.onload = function(event) {
-															
+
 																			var data = JSON.parse(event.target.result);
-																
+
 																			var arrSizes, arrSizeGroups, arrSizeGroupsDetail;
 																			var arrSugars, arrSugarGroups, arrSugarGroupsDetail;
 																			var arrIceDosages, arrIceDosageGroups, arrIceDosageGroupsDetail;
 
 																			var arrDrinks, arrProducts;
-																
+
 																			var tableName, voPath;
-																			
+
 																			var key;
 																			var posTrnLogs, posTrnLogsDetail;
-																			
+
 																			for (key in localStorage) {
-																
+
 																				if (key.startsWith(localPath + Configurations.webServiceVOPath) == true) localStorage.removeItem(key);
 																			}
-																
+
 																			tableName = 'sizes';
 																			voPath = localPath + Configurations.webServiceVOPath + tableName;
 																			arrSizes = data[tableName];
 																			arrSizesVO.length = 0;
 																			localStorage.setItem(voPath, JSON.stringify(arrSizes));
 																			setArrVOFromLocalStorage(tableName, Sizes, arrSizesVO);
-																	
+
 																			tableName = 'size_groups';
 																			voPath = localPath + Configurations.webServiceVOPath + tableName;
 																			arrSizeGroups = data[tableName];
 																			arrSizeGroupsVO.length = 0;
 																			localStorage.setItem(voPath, JSON.stringify(arrSizeGroups));
 																			setArrVOFromLocalStorage(tableName, SizeGroups, arrSizeGroupsVO);
-																	
+
 																			tableName = 'size_groups_detail';
 																			voPath = localPath + Configurations.webServiceVOPath + tableName;
 																			arrSizeGroupsDetail = data[tableName];
 																			arrSizeGroupsDetailVO.length = 0;
 																			localStorage.setItem(voPath, JSON.stringify(arrSizeGroupsDetail));
 																			setArrVOFromLocalStorage(tableName, SizeGroupsDetail, arrSizeGroupsDetailVO);
-																	
+
 																			tableName = 'sugars';
 																			voPath = localPath + Configurations.webServiceVOPath + tableName;
 																			arrSugars = data[tableName];
 																			arrSugarsVO.length = 0;
 																			localStorage.setItem(voPath, JSON.stringify(arrSugars));
 																			setArrVOFromLocalStorage(tableName, Sugars, arrSugarsVO);
-																	
+
 																			tableName = 'sugar_groups';
 																			voPath = localPath + Configurations.webServiceVOPath + tableName;
 																			arrSugarGroups = data[tableName];
 																			arrSugarGroupsVO.length = 0;
 																			localStorage.setItem(voPath, JSON.stringify(arrSugarGroups));
 																			setArrVOFromLocalStorage(tableName, SugarGroups, arrSugarGroupsVO);
-																	
+
 																			tableName = 'sugar_groups_detail';
 																			voPath = localPath + Configurations.webServiceVOPath + tableName;
 																			arrSugarGroupsDetail = data[tableName];
 																			arrSugarGroupsDetailVO.length = 0;
 																			localStorage.setItem(voPath, JSON.stringify(arrSugarGroupsDetail));
 																			setArrVOFromLocalStorage(tableName, SugarGroupsDetail, arrSugarGroupsDetailVO);
-																	
+
 																			tableName = 'ice_dosages';
 																			voPath = localPath + Configurations.webServiceVOPath + tableName;
 																			arrIceDosages = data[tableName];
 																			arrIceDosagesVO.length = 0;
 																			localStorage.setItem(voPath, JSON.stringify(arrIceDosages));
 																			setArrVOFromLocalStorage(tableName, IceDosages, arrIceDosagesVO);
-																	
+
 																			tableName = 'ice_dosage_groups';
 																			voPath = localPath + Configurations.webServiceVOPath + tableName;
 																			arrIceDosageGroups = data[tableName];
 																			arrIceDosageGroupsVO.length = 0;
 																			localStorage.setItem(voPath, JSON.stringify(arrIceDosageGroups));
 																			setArrVOFromLocalStorage(tableName, IceDosageGroups, arrIceDosageGroupsVO);
-																	
+
 																			tableName = 'ice_dosage_groups_detail';
 																			voPath = localPath + Configurations.webServiceVOPath + tableName;
 																			arrIceDosageGroupsDetail = data[tableName];
 																			arrIceDosageGroupsDetailVO.length = 0;
 																			localStorage.setItem(voPath, JSON.stringify(arrIceDosageGroupsDetail));
 																			setArrVOFromLocalStorage(tableName, IceDosageGroupsDetail, arrIceDosageGroupsDetailVO);
-																	
+
 																			tableName = 'drinks';
 																			voPath = localPath + Configurations.webServiceVOPath + tableName;
 																			arrDrinks = data[tableName];
 																			arrDrinksVO.length = 0;
 																			localStorage.setItem(voPath, JSON.stringify(arrDrinks));
 																			setArrVOFromLocalStorage(tableName, Drinks, arrDrinksVO);
-																	
+
 																			tableName = 'products';
 																			voPath = localPath + Configurations.webServiceVOPath + tableName;
 																			arrProducts = data[tableName];
 																			arrProductsVO.length = 0;
 																			localStorage.setItem(voPath, JSON.stringify(arrProducts));
 																			setArrVOFromLocalStorage(tableName, Products, arrProductsVO);
-																			
+
 																			tableName = 'pos_trn_logs';
 																			posTrnLogs = data[tableName];
 																			for (key in posTrnLogs) {
-																			
+
 																				voPath = localPath + Configurations.webServiceVOPath + tableName + '/' + key;
-																			
+
 																				localStorage.setItem(voPath, JSON.stringify(data[tableName][key]));
 																			}
-																			
+
 																			tableName = 'pos_trn_logs_detail';
 																			posTrnLogsDetail = data[tableName];
 																			for (key in posTrnLogsDetail) {
-																			
+
 																				voPath = localPath + Configurations.webServiceVOPath + tableName + '/' + key;
-																			
+
 																				localStorage.setItem(voPath, JSON.stringify(data[tableName][key]));
 																			}
 																		};
-												
+
 																		fileReader.readAsText(file);
-															
+
 																		closeProgressbar();
-																		
+
 																		FormUtils.showMessage('資料匯入完成！！', function() {createPOS00020();});
 																	});
 																}
@@ -2143,81 +2169,81 @@
 
 					usersVO.setUserAccount('ace33022');
 					usersVO.setUserName('ace33022');
-					
+
 					if (('localStorage' in window) && (window['localStorage'] != null)) {
 
 						ReUtils.beforeInitEnv(function() {
 
 							var key;
 							var loadInit = true;
-				
+
 							for (key in localStorage) {
-							
+
 								if (key.startsWith(localPath + Configurations.webServiceVOPath) == true) {
-								
+
 									loadInit = false;
 									break;
 								}
 							}
-							
+
 							if (loadInit) {
-							
+
 								FormUtils.showConfirmMessage(
-								
+
 									'系統資料尚未建立，是否載入初始化資料？',
 									function() {
-									
+
 										FormUtils.showProgressbar(
-											
+
 											'資料處理中，請稍候‧‧‧',
 											function(closeProgressbar) {
-												
+
 												requirejs(["tw.ace33022.util.InitDataUtils"], function(InitDataUtils) {
-												
+
 													var tableName;
-											
+
 													tableName = 'sizes';
 													arrSizesVO = InitDataUtils.getSizesVOArrayInitData(usersVO.getUserAccount());
 													setArrVOToLocalStorage(arrSizesVO, tableName);
-												
+
 													tableName = 'size_groups';
 													arrSizeGroupsVO = InitDataUtils.getSizeGroupsVOArrayInitData(usersVO.getUserAccount());
 													setArrVOToLocalStorage(arrSizeGroupsVO, tableName);
-												
+
 													tableName = 'size_groups_detail';
 													arrSizeGroupsDetailVO = InitDataUtils.getSizeGroupsDetailVOArrayInitData(usersVO.getUserAccount());
 													setArrVOToLocalStorage(arrSizeGroupsDetailVO, tableName);
-											
+
 													tableName = 'sugars';
 													arrSugarsVO = InitDataUtils.getSugarsVOArrayInitData(usersVO.getUserAccount());
 													setArrVOToLocalStorage(arrSugarsVO, tableName);
-												
+
 													tableName = 'sugar_groups';
 													arrSugarGroupsVO = InitDataUtils.getSugarGroupsVOArrayInitData(usersVO.getUserAccount());
 													setArrVOToLocalStorage(arrSugarGroupsVO, tableName);
-												
+
 													tableName = 'sugar_groups_detail';
 													arrSugarGroupsDetailVO = InitDataUtils.getSugarGroupsDetailVOArrayInitData(usersVO.getUserAccount());
 													setArrVOToLocalStorage(arrSugarGroupsDetailVO, tableName);
-												
+
 													tableName = 'ice_dosages';
 													arrIceDosagesVO = InitDataUtils.getIceDosagesVOArrayInitData(usersVO.getUserAccount());
 													setArrVOToLocalStorage(arrIceDosagesVO, tableName);
-												
+
 													tableName = 'ice_dosage_groups';
 													arrIceDosageGroupsVO = InitDataUtils.getIceDosageGroupsVOArrayInitData(usersVO.getUserAccount());
 													setArrVOToLocalStorage(arrIceDosageGroupsVO, tableName);
-												
+
 													tableName = 'ice_dosage_groups_detail';
 													arrIceDosageGroupsDetailVO = InitDataUtils.getIceDosageGroupsDetailVOArrayInitData(usersVO.getUserAccount());
 													setArrVOToLocalStorage(arrIceDosageGroupsDetailVO, tableName);
-												
+
 													tableName = 'drinks';
 													arrDrinksVO = InitDataUtils.getDrinksVOArrayInitData(usersVO.getUserAccount());
 													setArrVOToLocalStorage(arrDrinksVO, tableName);
-														
+
 													closeProgressbar();
-											
+
 													createPOS00020();
 												});
 											}
@@ -2226,11 +2252,11 @@
 								);
 							}
 							else {
-								
+
 								requirejs(["tw.ace33022.vo.Sizes", "tw.ace33022.vo.SizeGroups", "tw.ace33022.vo.SizeGroupsDetail", "tw.ace33022.vo.Sugars", "tw.ace33022.vo.SugarGroups", "tw.ace33022.vo.SugarGroupsDetail", "tw.ace33022.vo.IceDosages", "tw.ace33022.vo.IceDosageGroups", "tw.ace33022.vo.IceDosageGroupsDetail", "tw.ace33022.vo.Drinks", "tw.ace33022.vo.Products"], function(Sizes, SizeGroups, SizeGroupsDetail, Sugars, SugarGroups, SugarGroupsDetail, IceDosages, IceDosageGroups, IceDosageGroupsDetail, Drinks, Products) {
-								
+
 									var tableName, voPath;
-									
+
 									tableName = 'sizes';
 									voPath = localPath + Configurations.webServiceVOPath + tableName;
 									if (localStorage.getItem(voPath)) {
