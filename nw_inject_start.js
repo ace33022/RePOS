@@ -31,15 +31,5 @@
  * 
  */
 
-process.env.ConfigurationsFile = 'K:/nwJS/Videojs/javascripts/Configurations.js';
 process.env.NODE_PATH = 'W:/Tool/Package/LangEnv/JavaScript/nodeJS/node_modules';
-
-var Configurations = require(process.env.ConfigurationsFile);
-
-var nwrequirejs = require(process.env.NODE_PATH + '/' + 'requirejs/bin/r.js');  // require.js
-
-nwrequirejs.config(require(process.env.NODE_PATH + '/' + 'tw/ace33022/RequireJSConfig.js'));
-
-nwrequirejs(["tw.ace33022.util.StringUtils"], function(StringUtils) {
-
-});
+process.env.ConfigurationsFile = 'W:/Tool/Package/LangEnv/Java/apache-tomcat/webapps/ROOT/javascripts/Configurations.js';
