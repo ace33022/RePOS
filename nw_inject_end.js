@@ -34,7 +34,6 @@ Configurations.loadJS(Configurations.requirejsFile, function() {
 
 		// var localPath = location.href.substring(0, location.href.lastIndexOf("/") + 1);
 		var localPath = location.pathname.substring(0, location.pathname.lastIndexOf("/") + 1);
-		var appId = 'appId' + Math.random().toString(36).substr(2, 6);
 
 		var usersVO = new Users();
 
@@ -143,24 +142,14 @@ Configurations.loadJS(Configurations.requirejsFile, function() {
 			}
 		}
 
-		function newAppTag() {
-
-			jQuery('#' + appId).remove();
-
-			appId = 'appId' + Math.random().toString(36).substr(2, 6);
-
-			jQuery('body').append('<div id="' + appId + '" class="container-fluid"></div>');
-		};
-
 		function createSYS00210() {
 
-			newAppTag();
+			jQuery('body').empty();
 
 			requirejs(["tw.ace33022.vo.Sizes", "tw.ace33022.backbone.model.Ancestor", "tw.ace33022.backbone.view.SYS00210", "underscore"], function(Sizes, AncestorModel, View) {
-
+			
 				new View({
 
-					"el": '#' + appId,
 					"originalModel": AncestorModel.extend({
 
 						"initialize": function() {},
@@ -168,7 +157,7 @@ Configurations.loadJS(Configurations.requirejsFile, function() {
 						"constructor": function(attributes, options) {Backbone.Model.apply(this, arguments);}
 					}),
 					"onSelectButtonClick": function(event, callback) {
-
+					
 						var self = this;
 
 						FormUtils.selectSizesModal(arrSizesVO, function(sizeCode) {
@@ -254,13 +243,12 @@ Configurations.loadJS(Configurations.requirejsFile, function() {
 
 		function createSYS00220() {
 
-			newAppTag();
+			jQuery('body').empty();
 
 			requirejs(["tw.ace33022.vo.SizeGroups", "tw.ace33022.vo.SizeGroupsDetail", "tw.ace33022.backbone.model.Ancestor", "tw.ace33022.backbone.view.SYS00220", "underscore"], function(SizeGroups, SizeGroupsDetail, AncestorModel, View) {
 
 				new View({
 
-					"el": '#' + appId,
 					"originalModel": AncestorModel.extend({
 
 						"initialize": function() {},
@@ -403,13 +391,12 @@ Configurations.loadJS(Configurations.requirejsFile, function() {
 
 		function createSYS00230() {
 
-			newAppTag();
+			jQuery('body').empty();
 
 			requirejs(["tw.ace33022.vo.Sugars", "tw.ace33022.backbone.model.Ancestor", "tw.ace33022.backbone.view.SYS00230", "underscore"], function(Sugars, AncestorModel, View) {
 
 				new View({
 
-					"el": '#' + appId,
 					"originalModel": AncestorModel.extend({
 
 						"initialize": function() {},
@@ -503,13 +490,12 @@ Configurations.loadJS(Configurations.requirejsFile, function() {
 
 		function createSYS00240() {
 
-			newAppTag();
+			jQuery('body').empty();
 
 			requirejs(["tw.ace33022.vo.SugarGroups", "tw.ace33022.vo.SugarGroupsDetail", "tw.ace33022.backbone.model.Ancestor", "tw.ace33022.backbone.view.SYS00240", "underscore"], function(SugarGroups, SugarGroupsDetail, AncestorModel, View) {
 
 				new View({
 
-					"el": '#' + appId,
 					"originalModel": AncestorModel.extend({
 
 						"initialize": function() {},
@@ -652,13 +638,12 @@ Configurations.loadJS(Configurations.requirejsFile, function() {
 
 		function createSYS00250() {
 
-			newAppTag();
+			jQuery('body').empty();
 
 			requirejs(["tw.ace33022.vo.IceDosages", "tw.ace33022.backbone.model.Ancestor", "tw.ace33022.backbone.view.SYS00250", "underscore"], function(IceDosages, AncestorModel, View) {
 
 				new View({
 
-					"el": '#' + appId,
 					"originalModel": AncestorModel.extend({
 
 						"initialize": function() {},
@@ -753,13 +738,12 @@ Configurations.loadJS(Configurations.requirejsFile, function() {
 
 		function createSYS00260() {
 
-			newAppTag();
+			jQuery('body').empty();
 
 			requirejs(["tw.ace33022.vo.IceDosageGroups", "tw.ace33022.vo.IceDosageGroupsDetail", "tw.ace33022.backbone.model.Ancestor", "tw.ace33022.backbone.view.SYS00260", "underscore"], function(IceDosageGroups, IceDosageGroupsDetail, AncestorModel, View) {
 
 				new View({
 
-					"el": '#' + appId,
 					"originalModel": AncestorModel.extend({
 
 						"initialize": function() {},
@@ -902,13 +886,12 @@ Configurations.loadJS(Configurations.requirejsFile, function() {
 
 		function createSYS00270() {
 
-			newAppTag();
+			jQuery('body').empty();
 
 			requirejs(["tw.ace33022.vo.Drinks", "tw.ace33022.backbone.model.Ancestor", "tw.ace33022.backbone.view.SYS00270", "underscore"], function(Drinks, AncestorModel, View) {
 
 				new View({
 
-					"el": '#' + appId,
 					"originalModel": AncestorModel.extend({
 
 						"initialize": function() {},
@@ -1107,12 +1090,10 @@ Configurations.loadJS(Configurations.requirejsFile, function() {
 
 		function createPOS00020() {
 
-			newAppTag();
+			jQuery('body').empty();
 
 			requirejs(["tw.ace33022.vo.POSTrnLogs", "tw.ace33022.backbone.view.POS00020", "moment", "x-editable-bootstrap3"], function(POSTrnLogs, View, moment) {
-
-				var view;
-
+			
 				function checkTranDetail(noneZeroFunction, zeroFunction) {
 
 					if (view.getArrPOSTrnLogsDetailVO().length !== 0) {
@@ -1149,9 +1130,8 @@ Configurations.loadJS(Configurations.requirejsFile, function() {
 					}
 				}
 
-				view = new View({
+				var view = new View({
 
-					"el": '#' + appId,
 					"getUsersVO": function() {
 
 						return usersVO;
@@ -1239,7 +1219,7 @@ Configurations.loadJS(Configurations.requirejsFile, function() {
 						return self;
 					}
 				});
-
+				
 				view.addDropdownMenu({
 
 					"menuCaption": "交易處理",
@@ -1405,8 +1385,8 @@ Configurations.loadJS(Configurations.requirejsFile, function() {
 																+ '</tr>';
 														objRow.find('tbody').append(tag);
 
-														view.clearContainers();
-														view.appendToDefaultContainer(objRow);
+														view.clearContainer();
+														view.appendRow(objRow);
 													}
 													else {
 
@@ -1514,8 +1494,8 @@ Configurations.loadJS(Configurations.requirejsFile, function() {
 																+ '</tr>';
 														objRow.find('tbody').append(tag);
 
-														view.clearContainers();
-														view.appendToDefaultContainer(objRow);
+														view.clearContainer();
+														view.appendRow(objRow);
 													}
 													else {
 
@@ -1627,8 +1607,8 @@ Configurations.loadJS(Configurations.requirejsFile, function() {
 														+ '</div>';
 										var objRow = jQuery(tag);
 
-										view.clearContainers();
-										view.appendToDefaultContainer(objRow);
+										view.clearContainer();
+										view.appendRow(objRow);
 
 										if (arrProductsVO.length != 0) {
 
@@ -2069,7 +2049,7 @@ Configurations.loadJS(Configurations.requirejsFile, function() {
 			if (('localStorage' in window) && (window['localStorage'] != null)) {
 
 				ReUtils.beforeInitEnv(function() {
-
+				
 					var key;
 					var loadInit = true;
 
