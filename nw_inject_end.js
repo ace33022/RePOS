@@ -52,68 +52,6 @@ Configurations.loadJS(Configurations.requirejsFile, function() {
 		var arrDrinksVO = new Array();
 		var arrProductsVO = new Array();
 
-		jQuery('.navbar-brand').on('click', function(e) {
-
-			var modalId = 'modal' + Math.random().toString(36).substr(2, 6);
-
-			var tag = '<div class="modal fade" role="dialog" id="' + modalId + '">'
-							+ '  <div class="modal-dialog modal-sm" role="document">'
-							+ '    <div class="modal-content">'
-							+ '      <div class="modal-header">'
-							+ '      	 <h4 class="modal-title">主功能</h4>'
-							+ '      </div>'
-							+ '      <div class="modal-body">'
-							+ '        <table class="table table-bordered table-condensed table-hover">'
-							+ '          <tbody class="rowlink">'
-							+ '            <tr><td style="text-align: center;">登出</td></tr>'
-							+ '            <tr><td style="text-align: center;">關於RePOS</td></tr>'
-							+ '          </tbody>'
-							+ '        </table>'
-							+ '      </div>'
-							+ '      <div class="modal-footer">'
-							+ '        <button type="button" class="btn btn-primary" data-dismiss="modal">關閉</button>'
-							+ '      </div>'
-							+ '    </div> <!-- /.modal-content -->'
-							+ '  </div> <!-- /.modal-dialog -->'
-							+ '</div> <!-- /.modal -->'
-
-			var clickIndex = -1;
-
-			e.preventDefault();
-
-			jQuery(tag).appendTo('body');
-
-			jQuery('#' + modalId + ' div > table > tbody > tr:eq(0)').on('click', function(e) {
-
-				clickIndex = 0;
-
-				jQuery('#' + modalId).modal('hide');
-			});
-
-			jQuery('#' + modalId + ' div > table > tbody > tr:eq(1)').on('click', function(e) {
-
-				clickIndex = 1;
-
-				jQuery('#' + modalId).modal('hide');
-			});
-
-			jQuery('#' + modalId).on('hidden.bs.modal', function() {
-
-				jQuery(this).remove();
-
-				if (clickIndex == 0) {
-
-					FormUtils.showMessage('登出');
-				}
-				else if (clickIndex == 1) {
-
-					FormUtils.showAbout();
-				}
-			});
-
-			jQuery('#' + modalId).modal('show');
-		});
-
 		function setArrVOToLocalStorage(arrVO, tableName) {
 
 			var voPath = localPath + Configurations.webServiceVOPath + tableName;
@@ -2167,22 +2105,30 @@ Configurations.loadJS(Configurations.requirejsFile, function() {
 										
 												if (data["error_code"] == 0) {
 											
+													// FormUtils.showMessage('感謝提供建議或問題反應！！');
 												}
 												else {
 											
 													// show error message
 												}
-												
-												FormUtils.showMessage('感謝提供建議或問題反應！！');
 											},
 											"error": function(jqXHR, textStatus, errorThrown) {
 										
 												// show error message
-												FormUtils.showMessage('感謝提供建議或問題反應！！');
+												// FormUtils.showMessage('感謝提供建議或問題反應！！');
 											}
 										};
 									
-										jQuery.ajax(ajaxSettings);
+										if (data === '') {
+										
+											FormUtils.showMessage('內容空白？！', function() { jQuery(event.target).trigger('click'); });
+										}
+										else {
+										
+											jQuery.ajax(ajaxSettings);
+											
+											FormUtils.showMessage('感謝提供建議或問題反應！！');
+										}
 									}
 								});
 							}
