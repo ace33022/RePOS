@@ -26,6 +26,14 @@
 # Base64 Image Encoder(https://www.base64-image.de/)
 # · conv · Convert image to base64 string, using the html5 canvas.(http://git.blivesta.com/conv/)
 
+# 飲料 照片
+	Can Stock Photo 的攝影圖片和影像(http://www.canstockphoto.hk/)
+
+	飲料照片。1272739飲料提供由數千位攝影師所拍攝之免版稅照片供您下載。(http://www.canstockphoto.hk/images-photos/%E9%A3%B2%E6%96%99.html)
+
+	# javascript jpg to base64
+		How to convert image into base64 string using javascript - Stack Overflow(https://stackoverflow.com/questions/6150289/how-to-convert-image-into-base64-string-using-javascript)
+
 # Web Storage API example(https://mdn.github.io/dom-examples/web-storage/)
 
 # X-editable :: In-place editing with Twitter Bootstrap, jQuery UI or pure jQuery(http://vitalets.github.io/x-editable/)
@@ -75,17 +83,13 @@
 	https://github.com/mleibman/SlickGrid
 		https://github.com/mleibman/SlickGrid/wiki/Examples
 		http://mleibman.github.io/SlickGrid/examples/example3a-compound-editors.html
-
-# 飲料 照片
-	Can Stock Photo 的攝影圖片和影像(http://www.canstockphoto.hk/)
-
-	飲料照片。1272739飲料提供由數千位攝影師所拍攝之免版稅照片供您下載。(http://www.canstockphoto.hk/images-photos/%E9%A3%B2%E6%96%99.html)
-
-	# javascript jpg to base64
-		How to convert image into base64 string using javascript - Stack Overflow(https://stackoverflow.com/questions/6150289/how-to-convert-image-into-base64-string-using-javascript)
+		
+# Bootstrap Affix(https://www.w3schools.com/bootstrap/bootstrap_affix.asp)
+# Bootstrap JS Affix Reference(https://www.w3schools.com/bootstrap/bootstrap_ref_js_affix.asp)
 
 # 商品資料
 	大分類 =>冰量
 	中分類 =>甜度
 	小分類 =>尺寸
 	部門分類 =>飲料名稱
+	

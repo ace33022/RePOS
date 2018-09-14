@@ -31,7 +31,7 @@ Configurations.loadJS(Configurations.requirejsFile, function() {
 	requirejs.config(tw.ace33022.RequireJSConfig);
 	
 	requirejs(["tw.ace33022.vo.Users", "tw.ace33022.util.browser.ReUtils", "tw.ace33022.util.browser.FormUtils"], function(Users, ReUtils, FormUtils) {
-
+	
 		// var localPath = location.href.substring(0, location.href.lastIndexOf("/") + 1);
 		var localPath = location.pathname.substring(0, location.pathname.lastIndexOf("/") + 1);
 
@@ -1132,6 +1132,7 @@ Configurations.loadJS(Configurations.requirejsFile, function() {
 
 				var view = new View({
 
+					"brandName": "DrinkPOS",
 					"getUsersVO": function() {
 
 						return usersVO;
@@ -1307,9 +1308,7 @@ Configurations.loadJS(Configurations.requirejsFile, function() {
 						{
 							"caption": "交易明細",
 							"click": function(event) {
-
-								jQuery('.collapse').collapse('hide');
-
+							
 								confirmAbortTran(
 
 									function() {
@@ -1318,20 +1317,19 @@ Configurations.loadJS(Configurations.requirejsFile, function() {
 
 											requirejs(["tw.ace33022.vo.POSTrnLogsDetail"], function(POSTrnLogsDetail) {
 
-												var rowId = 'rowId' + Math.random().toString(36).substr(2, 6);
-
-												var objRow;
+												var tableId = 'table' + Math.random().toString(36).substr(2, 6);
 
 												var tag;
+												
 												var trnDate;
 												var trnPath;
 												var vo;
 												var qty = 0, total = 0;
 
 												var arrPOSTrnLogsDetail = new Array();
-
+												
 												if ((typeof beginDate !== 'undefined') && (typeof endDate !== 'undefined')) {
-
+												
 													for (trnDate = beginDate; trnDate <= endDate; trnDate.add(1, 'day')) {
 
 														trnPath = localPath + Configurations.webServiceVOPath + 'pos_trn_logs_detail' + '/' + trnDate.format(Configurations.SaveDateFormatString);
@@ -1340,11 +1338,66 @@ Configurations.loadJS(Configurations.requirejsFile, function() {
 													}
 
 													if (arrPOSTrnLogsDetail.length !== 0) {
-
-														tag = '<div id="' + rowId + '" class="row">'
-																+ '  <table class="table table-hover table-striped">'
+													
+														/**
+														 *
+														 * Fix table header
+														 *
+														 * @description
+														 *
+														 * @version 2018/09/13 初始版本。
+														 *
+														 * @author ace
+														 *
+														 * @see <a href="https://developer.mozilla.org/en-US/docs/Web/API/Window/innerHeight">Window.innerHeight - Web APIs | MDN</a>
+														 * @see <a href="https://developer.mozilla.org/en-US/docs/Web/API/Window/outerHeight">Window.outerHeight - Web APIs | MDN</a>
+														 * @see <a href="https://developer.mozilla.org/en-US/docs/Web/API/Window/innerWidth">Window.innerWidth - Web APIs | MDN</a>
+														 * @see <a href="https://developer.mozilla.org/en-US/docs/Web/API/Window/outerWidth">Window.outerWidth - Web APIs | MDN</a>
+														 * @see <a href="https://developer.mozilla.org/en-US/docs/Web/Events/resize">resize - Event reference | MDN</a>
+														 * @see <a href="https://developer.mozilla.org/en-US/docs/Web/HTML/Element/table"><table>: The Table element - HTML: HyperText Markup Language | MDN</a>
+														 *
+														 * @see <a href="http://requirejs.org/">RequireJS</a>
+														 *
+														 * @see <a href="https://jquery.com/">jQuery</a>
+														 * @see <a href="https://api.jquery.com/resize/">.resize() | jQuery API Documentation</a>
+														 *
+														 * @see <a href="http://underscorejs.org/">Underscore.js</a>
+														 * @see <a href="https://github.com/jashkenas/underscore">jashkenas/underscore: JavaScript's utility _ belt</a>
+														 * @see <a href="http://backbonejs.org/">Backbone.js</a>
+														 * @see <a href="https://github.com/jashkenas/backbone">jashkenas/backbone: Give your JS App some Backbone with Models, Views, Collections, and Events</a>
+														 * @see <a href="https://github.com/jashkenas/backbone/wiki/Tutorials%2C-blog-posts-and-example-sites">Tutorials, blog posts and example sites · jashkenas/backbone Wiki</a>
+														 *
+														 * @see <a href="https://getbootstrap.com/">Bootstrap · The most popular HTML, CSS, and JS library in the world.</a>
+														 *
+														 * @see <a href="https://mdbootstrap.com/content/bootstrap-table-scroll/">Bootstrap table scroll - examples & tutorial. Basic & advanced usage - Material Design for Bootstrap</a>
+														 * @see <a href="http://www.iamramraj.com/bootstrap-fixed-table-header-using-css/">Bootstrap Fixed Table Header using CSS - HTML Tutorials - PHP, CSS, Tech, Ubuntu Tutorials for Beginners | Iamramraj.com</a>
+														 * @see <a href="https://www.jqueryscript.net/table/Bootstrap-Compatible-Sticky-Table-Header-Plugin-Table-Fixed-Head.html">Bootstrap Compatible Sticky Table Header Plugin - Table Fixed Head | Free jQuery Plugins</a>
+														 * @see <a href="https://www.jqueryscript.net/table/Bootstrap-Plugin-Freeze-Table-Header-While-Scrolling-decapitate.html">Bootstrap Plugin To Freeze Table Header While Scrolling - decapitate | Free jQuery Plugins</a>
+														 * @see <a href="https://github.com/oma/table-fixed-header/">rubynor/table-fixed-header: Keep table header visible when page scrolls. Supports rowspan and colspan. The table header will be fixed once hitting the screen top. Example with twitter bootstrap</a>
+														 * @see <a href="http://embed.plnkr.co/XLCqnt/">Bootstrap 3 RC Example Fixed Table Header - Plunker</a>
+														 * @see <a href="https://codepen.io/yavuzselim/pen/LNYrBd">Bootstrap table thead fix tbody scroll</a>
+														 * @see <a href="https://codepen.io/bobmarksie/pen/VadxoK">Fixed Headers Bootstrap Table (Responsive)</a>
+														 * @see <a href="https://stackoverflow.com/questions/11483378/twitter-bootstrap-scrollable-table-rows-and-fixed-header">jquery - Twitter Bootstrap scrollable table rows and fixed header - Stack Overflow</a>
+														 * @see <a href="https://stackoverflow.com/questions/44114210/how-to-notify-when-a-table-in-html-is-resized">javascript - How to notify when a table in html is resized?? - Stack Overflow</a>
+														 * @see <a href="https://stackoverflow.com/questions/2157963/is-it-possible-to-listen-to-a-style-change-event">javascript - Is it possible to listen to a "style change" event? - Stack Overflow</a>
+														 *
+														 * @comment
+														 *
+														 * @todo
+														 *
+														 */
+														view.clearContainer();
+														
+														view.getContainer().css({
+														
+															"padding-right": "0px",
+															"padding-left": "0px"
+														});
+														
+														tag = '<div class="panel panel-default" style="width: 100%;">'
+																+ '  <table class="table table-striped" style="table-layout: fixed;">'
 																+ '    <thead>'
-																+ '      <tr style="display: inline-table; table-layout: fixed; width: 99%;">'
+																+ '      <tr>'
 																+ '        <th style="text-align: center;">交易日期</th>'
 																+ '        <th style="text-align: center;">名稱</th>'
 																+ '        <th style="text-align: center;">價格</th>'
@@ -1352,11 +1405,16 @@ Configurations.loadJS(Configurations.requirejsFile, function() {
 																+ '        <th style="text-align: center;">小計</th>'
 																+ '      </tr>'
 																+ '    </thead>'
-																+ '    <tbody style="position: absolute; overflow-y: scroll; height: 80%;"></tbody>'
 																+ '  </table>'
+																+ '  <div style="overflow-y: auto;">'
+																+ '    <table id="' + tableId + '" class="table table-hover table-striped">'
+																+ '      <tbody></tbody>'
+																+ '      <tfoot></tfoot>'
+																+ '    </table>'
+																+ '  </div>'
 																+ '</div>';
-														objRow = jQuery(tag);
-
+														view.getContainer().append(tag);
+														
 														vo = new POSTrnLogsDetail();
 
 														for (index = 0; index < arrPOSTrnLogsDetail.length; index++) {
@@ -1366,27 +1424,36 @@ Configurations.loadJS(Configurations.requirejsFile, function() {
 															qty += vo.getTrnQty();
 															total += vo.getTrnTotal();
 
-															tag = '<tr style="display: inline-table; table-layout: fixed; width: 99%;">'
-																	+ '  <td style="text-align: center; vertical-align: middle;">' + moment(vo.getTrnDate(), Configurations.SaveDateFormatString, true).format(Configurations.ShowDateFormatString) + '</td>'
-																	+ '  <td style="text-align: left; vertical-align: middle;">' + vo.getProductName() + '</td>'
-																	+ '  <td style="text-align: right; vertical-align: middle;">' + vo.getProductPrice() + '</td>'
-																	+ '  <td style="text-align: right; vertical-align: middle;">' + vo.getTrnQty() + '</td>'
-																	+ '  <td style="text-align: right; vertical-align: middle;">' + vo.getTrnTotal() + '</td>'
+															tag = '<tr>'
+																	+ '  <td style="text-align: center; vertical-align: middle; width: 30%;">' + moment(vo.getTrnDate(), Configurations.SaveDateFormatString, true).format(Configurations.ShowDateFormatString) + '</td>'
+																	+ '  <td style="text-align: left; vertical-align: middle; width: 40%;">' + vo.getProductName() + '</td>'
+																	+ '  <td style="text-align: right; vertical-align: middle; width: 10%;">' + vo.getProductPrice() + '</td>'
+																	+ '  <td style="text-align: right; vertical-align: middle; width: 10%;">' + vo.getTrnQty() + '</td>'
+																	+ '  <td style="text-align: right; vertical-align: middle; width: 10%;">' + vo.getTrnTotal() + '</td>'
 																	+ '</tr>';
-															objRow.find('tbody').append(tag);
+															jQuery('#' + tableId).find('tbody').append(tag);
 														}
 
-														tag = '<tr style="display: inline-table; table-layout: fixed; width: 99%;">'
+														tag = '<tr>'
 																+ '  <td></td>'
 																+ '  <td style="text-align: left; vertical-align: middle;">總計</td>'
 																+ '  <td style="text-align: right; vertical-align: middle;"></td>'
 																+ '  <td style="text-align: right; vertical-align: middle;">' + (new String(qty)) + '</td>'
 																+ '  <td style="text-align: right; vertical-align: middle;">' + (new String(total)) + '</td>'
 																+ '</tr>';
-														objRow.find('tbody').append(tag);
+														jQuery('#' + tableId).find('tfoot').append(tag);
+														
+														jQuery(window).on('resize', function(event) {
+														
+															jQuery('#' + tableId).parent().css('height', window.innerHeight - jQuery('.navbar').height() - jQuery(jQuery('.panel').find('table')[0]).height() - 25);
+															
+															jQuery('#' + tableId + ' tbody tr:eq(0)').find('td').each(function(index, element) {
+														
+																jQuery(view.getContainer().find('thead > tr > th')[index]).width(jQuery(this).width());
+															});
+														});
 
-														view.clearContainer();
-														view.appendRow(objRow);
+														jQuery(window).trigger('resize');
 													}
 													else {
 
@@ -1403,8 +1470,6 @@ Configurations.loadJS(Configurations.requirejsFile, function() {
 							"caption": "交易金額",
 							"click": function(event) {
 
-								jQuery('.collapse').collapse('hide');
-
 								confirmAbortTran(
 
 									function() {
@@ -1413,35 +1478,21 @@ Configurations.loadJS(Configurations.requirejsFile, function() {
 
 											requirejs(["tw.ace33022.vo.POSTrnLogsDetail"], function(POSTrnLogsDetail) {
 
-												var rowId = 'rowId' + Math.random().toString(36).substr(2, 6);
-
-												var objRow;
+												var tableId = 'table' + Math.random().toString(36).substr(2, 6);
 
 												var trnDate;
 												var trnPath;
 												var index;
-												var vo = new POSTrnLogsDetail();
+												
 												var qty = 0, total = 0;
 												var tqty = 0, ttotal = 0;
+												
+												var vo = new POSTrnLogsDetail();
 
 												var arrPOSTrnLogsDetail = new Array();
 												var arrData = new Array();
 
-												var tag = '<div id="' + rowId + '" class="row">'
-																+ '  <table class="table table-hover table-striped">'
-																+ '    <thead>'
-																+ '      <tr style="display: inline-table; table-layout: fixed; width: 99%;">'
-																+ '        <th style="text-align: center;">交易日期</th>'
-																+ '        <th style="text-align: center;">數量</th>'
-																+ '        <th style="text-align: center;">小計</th>'
-																+ '      </tr>'
-																+ '    </thead>'
-																+ '    <tbody style="position: absolute; overflow-y: scroll; height: 80%;"></tbody>'
-																+ '  </table>'
-																+ '</div>';
-												objRow = jQuery(tag);
-
-												if ((typeof beginDate != 'undefined') && (typeof endDate != 'undefined')) {
+												if ((typeof beginDate !== 'undefined') && (typeof endDate !== 'undefined')) {
 
 													for (trnDate = beginDate; trnDate <= endDate; trnDate.add(1, 'day')) {
 
@@ -1464,7 +1515,7 @@ Configurations.loadJS(Configurations.requirejsFile, function() {
 														tqty += qty;
 														ttotal += total;
 
-														if (qty != 0) {
+														if (qty !== 0) {
 
 															arrData.push({
 
@@ -1475,27 +1526,63 @@ Configurations.loadJS(Configurations.requirejsFile, function() {
 														}
 													}
 
-													if (arrData.length != 0) {
+													if (arrData.length !== 0) {
+													
+														view.clearContainer();
 
+														tag = '<div class="panel panel-default" style="width: 100%;">'
+																+ '  <table class="table table-striped" style="table-layout: fixed;">'
+																+ '    <thead>'
+																+ '      <tr>'
+																+ '        <th style="text-align: center;">交易日期</th>'
+																+ '        <th style="text-align: center;">數量</th>'
+																+ '        <th style="text-align: center;">小計</th>'
+																+ '      </tr>'
+																+ '    </thead>'
+																+ '  </table>'
+																+ '  <div style="overflow-y: auto;">'
+																+ '    <table id="' + tableId + '" class="table table-hover table-striped">'
+																+ '      <tbody></tbody>'
+																+ '      <tfoot></tfoot>'
+																+ '    </table>'
+																+ '  </div>'
+																+ '</div>';
+														view.getContainer().append(tag);
+
+														view.getContainer().css({
+														
+															"padding-right": "0px",
+															"padding-left": "0px"
+														});
+														
 														for (index = 0; index < arrData.length; index++) {
 
-															tag = '<tr style="display: inline-table; table-layout: fixed; width: 99%;">'
-																	+ '  <td style="text-align: center; vertical-align: middle;">' + arrData[index]["trn_date"] + '</td>'
-																	+ '  <td style="text-align: right; vertical-align: middle;">' + arrData[index]["qty"] + '</td>'
-																	+ '  <td style="text-align: right; vertical-align: middle;">' + arrData[index]["total"] + '</td>'
+															tag = '<tr>'
+																	+ '  <td style="text-align: center; vertical-align: middle; width: 60%;">' + arrData[index]["trn_date"] + '</td>'
+																	+ '  <td style="text-align: right; vertical-align: middle; width: 20%;">' + arrData[index]["qty"] + '</td>'
+																	+ '  <td style="text-align: right; vertical-align: middle; width: 20%;">' + arrData[index]["total"] + '</td>'
 																	+ '</tr>';
-															objRow.find('tbody').append(tag);
+															jQuery('#' + tableId).find('tbody').append(tag);
 														}
 
-														tag = '<tr style="display: inline-table; table-layout: fixed; width: 99%;">'
+														tag = '<tr>'
 																+ '  <td style="text-align: center; vertical-align: middle;">總計</td>'
 																+ '  <td style="text-align: right; vertical-align: middle;">' + (new String(tqty)) + '</td>'
 																+ '  <td style="text-align: right; vertical-align: middle;">' + (new String(ttotal)) + '</td>'
 																+ '</tr>';
-														objRow.find('tbody').append(tag);
+														jQuery('#' + tableId).find('tfoot').append(tag);
+														
+														jQuery(window).on('resize', function(event) {
+														
+															jQuery('#' + tableId).parent().css('height', window.innerHeight - jQuery('.navbar').height() - jQuery(jQuery('.panel').find('table')[0]).height() - 25);
+															
+															jQuery('#' + tableId + ' tbody tr:eq(0)').find('td').each(function(index, element) {
+														
+																jQuery(view.getContainer().find('thead > tr > th')[index]).width(jQuery(this).width());
+															});
+														});
 
-														view.clearContainer();
-														view.appendRow(objRow);
+														jQuery(window).trigger('resize');
 													}
 													else {
 
@@ -1519,16 +1606,12 @@ Configurations.loadJS(Configurations.requirejsFile, function() {
 							"caption": "尺寸基本資料維護",
 							"click": function(event) {
 
-								jQuery('.collapse').collapse('hide');
-
 								confirmAbortTran(createSYS00210);
 							}
 						},
 						{
 							"caption": "尺寸群組資料維護",
 							"click": function(event) {
-
-								jQuery('.collapse').collapse('hide');
 
 								confirmAbortTran(createSYS00220);
 							}
@@ -1537,16 +1620,12 @@ Configurations.loadJS(Configurations.requirejsFile, function() {
 							"caption": "甜度基本資料維護",
 							"click": function(event) {
 
-								jQuery('.collapse').collapse('hide');
-
 								confirmAbortTran(createSYS00230);
 							}
 						},
 						{
 							"caption": "甜度群組資料維護",
 							"click": function(event) {
-
-								jQuery('.collapse').collapse('hide');
 
 								confirmAbortTran(createSYS00240);
 							}
@@ -1555,16 +1634,12 @@ Configurations.loadJS(Configurations.requirejsFile, function() {
 							"caption": "冰塊用量基本資料維護",
 							"click": function(event) {
 
-								jQuery('.collapse').collapse('hide');
-
 								confirmAbortTran(createSYS00250);
 							}
 						},
 						{
 							"caption": "冰塊用量群組資料維護",
 							"click": function(event) {
-
-								jQuery('.collapse').collapse('hide');
 
 								confirmAbortTran(createSYS00260);
 							}
@@ -1573,8 +1648,6 @@ Configurations.loadJS(Configurations.requirejsFile, function() {
 							"caption": "飲料資料維護",
 							"click": function(event) {
 
-								jQuery('.collapse').collapse('hide');
-
 								confirmAbortTran(createSYS00270);
 							}
 						},
@@ -1582,161 +1655,185 @@ Configurations.loadJS(Configurations.requirejsFile, function() {
 							"caption": "商品資料維護",
 							"click": function(event) {
 
-								jQuery('.collapse').collapse('hide');
-
 								confirmAbortTran(
 
 									function() {
 
-										var rowId = 'rowId' + Math.random().toString(36).substr(2, 6);
+										var btnBatchEditId = 'table' + Math.random().toString(36).substr(2, 6);
+										var tableId = 'table' + Math.random().toString(36).substr(2, 6);
 
+										var tag;
 										var vo;
 										var index;
 
-										var tag = '<div id="' + rowId + '" class="row">'
-														+ '  <table class="table table-striped table-bordered">'
-														+ '    <thead>'
-														+ '      <tr style="display: inline-table; table-layout: fixed; width: 99%;">'
-														+ '        <th style="text-align: center; vertical-align: middle;"><input type="button" class="btn btn-default" style="margin-bottom: 10px;" value="整批異動" disabled /></th>'
-														+ '        <th style="text-align: center; vertical-align: middle;">商品編號</th>'
-														+ '        <th style="text-align: center; vertical-align: middle;">商品名稱</th>'
-														+ '        <th style="text-align: center; vertical-align: middle;">價格</th>'
-														+ '      </tr>'
-														+ '    </thead>'
-														+ '  </table>'
-														+ '</div>';
-										var objRow = jQuery(tag);
+										if (arrProductsVO.length !== 0) {
 
-										view.clearContainer();
-										view.appendRow(objRow);
-
-										if (arrProductsVO.length != 0) {
-
-											objRow.find('table').append('<tbody style="position: absolute; overflow-y: scroll; height: 80%;"></tbody>');
-
+											view.clearContainer();
+											
+											tag = '<div class="panel panel-default" style="width: 100%;">'
+													+ '  <table class="table table-striped" style="table-layout: fixed;">'
+													+ '    <thead>'
+													+ '      <tr>'
+													+ '        <th style="text-align: center; vertical-align: middle;"><input type="button" id="' + btnBatchEditId + '" class="btn btn-default" style="margin-bottom: 10px;" value="整批異動" disabled /></th>'
+													+ '        <th style="text-align: center; vertical-align: middle;">商品編號</th>'
+													+ '        <th style="text-align: center; vertical-align: middle;">商品名稱</th>'
+													+ '        <th style="text-align: center; vertical-align: middle;">價格</th>'
+													+ '      </tr>'
+													+ '    </thead>'
+													+ '  </table>'
+													+ '  <div style="overflow-y: auto;">'
+													+ '    <table id="' + tableId + '" class="table table-hover table-striped">'
+													+ '      <tbody></tbody>'
+													+ '    </table>'
+													+ '  </div>'
+													+ '</div>';
+											view.getContainer().append(tag);
+											
+											view.getContainer().css({
+											
+												"padding-right": "0px",
+												"padding-left": "0px"
+											});
+										
 											tag = '';
 											for (index = 0; index < arrProductsVO.length; index++) {
 
 												vo = arrProductsVO[index];
-												tag += '<tr style="display: inline-table; table-layout: fixed; width: 99%;"><td style="text-align: center; vertical-align: middle;"><input type="checkbox" /></td><td style="vertical-align: middle;">' + vo.getProductCode() + '</td><td style="vertical-align: middle;">' + vo.getProductName() + '</td><td style="vertical-align: middle;"><a href="#">' + vo.getProductPrice() + '</a></td></tr>';
+												tag += '<tr><td style="text-align: center; vertical-align: middle; width: 20%;"><input type="checkbox" /></td><td style="vertical-align: middle; width: 20%;">' + vo.getProductCode() + '</td><td style="vertical-align: middle;  width: 40%;">' + vo.getProductName() + '</td><td style="text-align: right; vertical-align: middle;  width: 10%;"><a href="#">' + vo.getProductPrice() + '</a></td></tr>';
 											}
-											objRow.find('tbody').append(tag);
-										}
-
-										/**
-										 *
-										 * @see <a href="https://api.jquery.com/checked-selector/">:checked Selector | jQuery API Documentation</a>
-										 *
-										 */
-										objRow.find('input[type="checkbox"]').on('click', function(event) {
-
-											// event.stopPropagation();
-
-											if (objRow.find('input:checked').length != 0) {
-
-												objRow.find('input[type="button"]').prop('disabled', false);
-											}
-											else {
-
-												objRow.find('input[type="button"]').prop('disabled', true);
-											}
-										});
-
-										objRow.find('input[type="button"]').on('click', function(event) {
-
-											FormUtils.showInputNumberModal({
-
-												"title": "",
-												"value": 10,
-												"callback": function(value) {
-
-													var productPrice = new Number(value);
-													var productCode;
-													var products;
-
-													objRow.find('tbody > tr').each(function(index, element) {
-
-														if (jQuery(element).find('input[type="checkbox"]').prop('checked')) {
-
-															productCode = jQuery(element).find('td').eq(1).text();
-
-															products = _.find(arrProductsVO, function(vo) {return vo.getProductCode() == productCode;});
-															products.setProductPrice(productPrice);
-
-															jQuery(element).find('td').eq(3).find('a').text(productPrice);
-														}
-													});
-
-													setArrVOToLocalStorage(arrProductsVO, 'products');
-
-													objRow.find('input[type="checkbox"]').prop('checked', false);
-													objRow.find('input[type="button"]').prop('disabled', true);
-												}
-											})
-										});
-
-										/**
-										 *
-										 * @see <a href="http://vitalets.github.io/x-editable/">X-editable :: In-place editing with Twitter Bootstrap, jQuery UI or pure jQuery</a>
-										 * @see <a href="https://github.com/vitalets/x-editable">vitalets/x-editable: In-place editing with Twitter Bootstrap, jQuery UI or pure jQuery</a>
-										 * @see <a href="https://vitalets.github.io/bootstrap-editable/">Editable for Bootstrap</a>
-										 * @see <a href="https://github.com/vitalets/bootstrap-editable">vitalets/bootstrap-editable: This plugin no longer supported! Please use x-editable instead!</a>
-										 *
-										 */
-										objRow.find('a').editable({
-
-											"type": "text",
-											"title": "價格",
-											"validate": function(value) {
-
-												var result = '';
-
-												if (!jQuery.isNumeric(value)) result = '輸入資料有誤！';
-
-												return result;
-											},
-											"success": function(response, newValue) {
-
-												var productPrice = new Number(newValue);
-												var productCode;
-												var products;
-
-												(jQuery(this).parent()).parent().each(function(index, element) {
-
-													jQuery(element).find('td').each(function(index, element) {
-
-														if (index === 1) productCode = jQuery(element).text();
-													});
+											jQuery('#' + tableId).find('tbody').append(tag);
+											
+											jQuery(window).on('resize', function(event) {
+											
+												jQuery('#' + tableId).parent().css('height', window.innerHeight - jQuery('.navbar').height() - jQuery(jQuery('.panel').find('table')[0]).height() - 25);
+												
+												jQuery('#' + tableId + ' tbody tr:eq(0)').find('td').each(function(index, element) {
+											
+													jQuery(view.getContainer().find('thead > tr > th')[index]).width(jQuery(this).width());
 												});
+											});
 
-												products = _.find(arrProductsVO, function(vo) {return vo.getProductCode() == productCode;});
-												products.setProductPrice(productPrice);
+											jQuery(window).trigger('resize');
+											
+											/**
+											 *
+											 * @see <a href="https://api.jquery.com/checked-selector/">:checked Selector | jQuery API Documentation</a>
+											 *
+											 */
+											jQuery('#' + tableId).find('input[type="checkbox"]').on('click', function(event) {
 
-												setArrVOToLocalStorage(arrProductsVO, 'products');
-											}
-										});
+												// event.stopPropagation();
 
-										objRow.find('a').on('shown', function(event, editable) {
+												if (jQuery('#' + tableId).find('input:checked').length !== 0) {
+
+													jQuery('#' + btnBatchEditId).prop('disabled', false);
+												}
+												else {
+
+													jQuery('#' + btnBatchEditId).prop('disabled', true);
+												}
+											});
+
+											jQuery('#' + btnBatchEditId).on('click', function(event) {
+
+												FormUtils.showInputNumberModal({
+
+													"title": "",
+													"value": 10,
+													"callback": function(value) {
+
+														var productPrice = new Number(value);
+														var productCode;
+														var products;
+
+														jQuery('#' + tableId).find('tbody > tr').each(function(index, element) {
+
+															if (jQuery(element).find('input[type="checkbox"]').prop('checked')) {
+
+																productCode = jQuery(element).find('td').eq(1).text();
+
+																products = _.find(arrProductsVO, function(vo) {return vo.getProductCode() == productCode;});
+																products.setProductPrice(productPrice);
+
+																jQuery(element).find('td').eq(3).find('a').text(productPrice);
+															}
+														});
+
+														setArrVOToLocalStorage(arrProductsVO, 'products');
+
+														jQuery('#' + tableId).find('input[type="checkbox"]').prop('checked', false);
+														jQuery('#' + btnBatchEditId).prop('disabled', true);
+													}
+												})
+											});
 
 											/**
 											 *
-											 * Popup select all
-											 *
-											 * @see <a href="https://github.com/vitalets/x-editable/issues/330">On input focus, Select all text · Issue #330 · vitalets/x-editable</a>
-											 *
-											 * @description
-											 *
-											 * @comment
+											 * @see <a href="http://vitalets.github.io/x-editable/">X-editable :: In-place editing with Twitter Bootstrap, jQuery UI or pure jQuery</a>
+											 * @see <a href="https://github.com/vitalets/x-editable">vitalets/x-editable: In-place editing with Twitter Bootstrap, jQuery UI or pure jQuery</a>
+											 * @see <a href="https://vitalets.github.io/bootstrap-editable/">Editable for Bootstrap</a>
+											 * @see <a href="https://github.com/vitalets/bootstrap-editable">vitalets/bootstrap-editable: This plugin no longer supported! Please use x-editable instead!</a>
 											 *
 											 */
-											editable.input.postrender = function() {
+											jQuery('#' + tableId).find('a').editable({
 
-												editable.input.$input.val(jQuery(event.target).text());
-												editable.input.$input.select();
-											};
+												"type": "text",
+												"title": "價格",
+												"validate": function(value) {
 
-											// 限定輸入數值(keypress)？
-										});
+													var result = '';
+
+													if (!jQuery.isNumeric(value)) result = '輸入資料有誤！';
+
+													return result;
+												},
+												"success": function(response, newValue) {
+
+													var productPrice = new Number(newValue);
+													var productCode;
+													var products;
+
+													(jQuery(this).parent()).parent().each(function(index, element) {
+
+														jQuery(element).find('td').each(function(index, element) {
+
+															if (index === 1) productCode = jQuery(element).text();
+														});
+													});
+
+													products = _.find(arrProductsVO, function(vo) {return vo.getProductCode() == productCode;});
+													products.setProductPrice(productPrice);
+
+													setArrVOToLocalStorage(arrProductsVO, 'products');
+												}
+											});
+
+											jQuery('#' + tableId).find('a').on('shown', function(event, editable) {
+
+												/**
+												 *
+												 * Popup select all
+												 *
+												 * @see <a href="https://github.com/vitalets/x-editable/issues/330">On input focus, Select all text · Issue #330 · vitalets/x-editable</a>
+												 *
+												 * @description
+												 *
+												 * @comment
+												 *
+												 */
+												editable.input.postrender = function() {
+
+													editable.input.$input.val(jQuery(event.target).text());
+													editable.input.$input.select();
+												};
+
+												// 限定輸入數值(keypress)？
+											});
+										}
+										else {
+										
+											FormUtils.showMessage('查無資料！');
+										}
 									}
 								);
 							}
@@ -2034,6 +2131,60 @@ Configurations.loadJS(Configurations.requirejsFile, function() {
 										});
 									}
 								);
+							}
+						}
+					]
+				});
+				
+				view.addDropdownMenu({
+
+					"menuCaption": "其它",
+					"items": [
+						{
+							"caption": "關於",
+							"click": function(event) {
+
+								FormUtils.showAbout();
+							}
+						},
+						{
+							"caption": "建議/問題反應",
+							"click": function(event) {
+
+								FormUtils.showTextareaModal({
+								
+									"title": "建議事項／問題回報",
+									"callback": function(data) {
+									
+										var ajaxSettings = {
+									
+											// "contentType": "application/json; charset=utf-8",
+											"dataType": "json",
+											"url": "https://script.google.com/macros/s/AKfycbwK43MXqb2LRIgS0Ujgsaa3lALclup0yyfLU6yW/exec",
+											"data": data,
+											"type": "POST",
+											"success": function(data, textStatus, jqXHR) {
+										
+												if (data["error_code"] == 0) {
+											
+												}
+												else {
+											
+													// show error message
+												}
+												
+												FormUtils.showMessage('感謝提供建議或問題反應！！');
+											},
+											"error": function(jqXHR, textStatus, errorThrown) {
+										
+												// show error message
+												FormUtils.showMessage('感謝提供建議或問題反應！！');
+											}
+										};
+									
+										jQuery.ajax(ajaxSettings);
+									}
+								});
 							}
 						}
 					]
